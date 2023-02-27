@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+const promise =  fetch(endpoint);
+const cities = [];
+promise
+  .then((res)=> res.json())
+  .then(data=>{
+    cities.push(...data);
+  })
+  .catch((err)=>{
+    console.log(err.message);
+  });
+
+function findCities(textInput,cities){
+  return cities.filter((place)=>place.city.toLowerCase().includes(textInput.toLowerCase())|| place.state.toLowerCase().includes(textInput.toLowerCase())) ;
+}
+
+function displayMatches(){
+  const old = document.querySelectorAll('.extra');
+  for(let i =0; i<old.length; i++){
+    suggestions.removeChild(old[i]);
+  }
+  const places = findCities(this.value,cities);
+  for(let place of places){
+    const li = document.createElement('li');
+    li.classList.add('suggestions');
+    li.classList.add('extra');
+    const regex = new RegExp(this.value,'gi');
+    const cityName = place.city.replace(regex,`<span class='hl'>${this.value}</span>`);
+    const stateName = place.state.replace(regex,`<span class='hl'>${this.value}</span>`);
+    li.innerHTML = `<span class="name">${cityName}, ${stateName}</span> <span class="population">${place.population}</span>`;
+    
+    suggestions.appendChild(li);
+  }
+}
+const search = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+search.addEventListener('change',displayMatches);
+search.addEventListener('keyup',displayMatches);
+
+
+</script>
+</body>
+</html>
