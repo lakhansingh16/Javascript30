@@ -19,28 +19,59 @@
     }
 
     // Regular
-
+    console.log('hiii');
+    
     // Interpolated
-
+    console.log('This is an %s String','awesome');
+    
     // Styled
-
+    console.log('%c I am a new string','font-size:32px; color:red;');
     // warning!
-
+    console.warn("Oh Shit!");
+    
     // Error :|
-
+    console.error('Wrong mf!');
+    
     // Info
-
+    console.info("Peter Parker is Spider-man");
+    
     // Testing
-
+    console.assert(10>91,"Wrong calculation, try math instead of meth");
+    
     // clearing
-
+    // console.clear();
     // Viewing DOM Elements
-
+    p = document.querySelector('p');
+    console.dir(p);
     // Grouping together
+    dogs.forEach(dog=>{
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age*7} human years old`);
+      console.groupEnd(`${dog.name}`);
+    })
 
     // counting
-
+    console.count("Muksan");
+    console.count("Muksan");
+    console.count("Muksan");
+    console.count("Muksan");
+    console.count("Muksan");
+    console.count("Muksan");
     // timing
+
+    console.time('Fetching github id');
+    fetch('https://api.github.com/users/lakhansingh16')
+    .then((res)=>res.json())
+    .then(data=>{
+      console.timeEnd('Fetching github id')
+      console.log(data);
+    });
+
+    //table
+    console.table(dogs);
+    
 
   </script>
 </body>
